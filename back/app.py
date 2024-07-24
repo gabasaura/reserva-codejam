@@ -4,8 +4,9 @@ from flask import Flask
 from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
-from models import db, User, Table, Schedule, Reservation
+from models import db, User, Space, Reservation
 from auth import auth_bp
+from reservations import reservations_bp
 
 load_dotenv()
 
@@ -20,10 +21,11 @@ Migrate(app, db)
 CORS(app)
 
 app.register_blueprint(auth_bp, url_prefix='/auth')
+app.register_blueprint(reservations_bp, url_prefix='/reservations')
 
 @app.route('/', methods=['GET'])
 def main():
-    return "Hola Mundo", 201
+    return "Hola CodeJam", 201
 
 if __name__ == '__main__':
     app.run(port=3000)
