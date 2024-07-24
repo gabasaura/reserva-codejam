@@ -4,7 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 	return {
 		store: {
-			url: 'http://localhost:3000',
+			url: 'http://127.0.0.1:3000/auth',
 			email: '',
 			password: "",
 			repeatPassword: "",
@@ -66,7 +66,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					// Form submit logic here
 					console.log("Form submitted successfully!");
 
-					const url = `${url}/login`;
+					const url = `${url}/auth/login`;
 					const options = {
 						method: "POST",
 						headers: {
@@ -91,9 +91,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			handleRegister: (e) => {
 				e.preventDefault();
-				const { name, email, password, username, repeatPassword } = getStore()
+				const { name, email, password, repeatPassword } = getStore()
 				const { register, validateForm } = getActions();
-				if (!validateForm()) register({ email, password, name, username, repeatPassword });
+				if (!validateForm()) register({ email, password, name, repeatPassword });
 			},
 			checkCurrentUser: () => {
 				if (sessionStorage.getItem('access_token')) {
@@ -114,7 +114,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						}
 					};
 
-					const response = await fetch(`${url}/login`, options);
+					const response = await fetch(`${url}/auth/login`, options);
 					const data = await response.json();
 
 					if (data.msg) {
@@ -142,7 +142,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 			},
-			// SIGNUP
 			register: async (credenciales) => {
 				try {
 					const { url } = getStore()
@@ -171,6 +170,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							current_user: user,
 							email: '',
 							password: '',
+							name: ''
 						});
 						sessionStorage.setItem('access_token', access_token);
 						sessionStorage.setItem('current_user', JSON.stringify(user));
