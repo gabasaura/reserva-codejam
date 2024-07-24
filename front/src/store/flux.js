@@ -179,7 +179,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     toast.success("Log out Successful");
                 }
             },
-			getReservation: async () => {
+			getReservations: async () => {
 				try {
 					const { access_token } = getStore()
 					const url = '127.0.0.1:3000/reservations_queries/user_reservations';
