@@ -25,22 +25,22 @@ const Register = () => {
                             <div className="row m-2">
                                 <div className="col-12 col-sm-6">
                                     <label htmlFor="email" className="form-label">Email</label>
-                                    <input type="email" className="form-control" id="email" name="email" value={store.email} onChange={actions.handleFormChange} />
+                                    <input type="email" className="form-control" id="email" name="email" value={store.email} onChange={actions.handleChange} />
                                 </div>
                                 <div className="col-12 col-sm-6">
                                     <label htmlFor="email" className="form-label">Nombre Completo</label>
-                                    <input type="text" className="form-control" id="name" name="name" value={store.name} onChange={actions.handleFormChange} />
+                                    <input type="text" className="form-control" id="name" name="name" value={store.name} onChange={actions.handleChange} />
                                 </div>
                             </div>
                             
                             <div className="row m-2">
                                 <div className="col-12 col-sm-6">
                                     <label htmlFor="password" className="form-label">Password</label>
-                                    <input type="password" className="form-control" id="password" name="password" value={store.password} onChange={actions.handleFormChange} />
+                                    <input type="password" className="form-control" id="password" name="password" value={store.password} onChange={actions.handleChange} />
                                 </div>
                                 <div className="col-12 col-sm-6">
                                     <label htmlFor="repeatPassword" className="form-label">Repeat Password</label>
-                                    <input type="password" className="form-control" id="repeatPassword" name="repeatPassword" value={store.repeatPassword} onChange={actions.handleFormChange} />
+                                    <input type="password" className="form-control" id="repeatPassword" name="repeatPassword" value={store.repeatPassword} onChange={actions.handleChange} />
                                 </div>
                             </div>
                         </div>
