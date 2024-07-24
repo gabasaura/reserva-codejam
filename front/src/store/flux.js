@@ -108,7 +108,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         }
                     };
 
-                    const response = await fetch(`${url}/login`, options); // Corregido para agregar `/login`
+                    const response = await fetch(`${url}/auth/login`, options); // Corregido para agregar `/login`
                     const data = await response.json();
 
                     if (data.msg) {

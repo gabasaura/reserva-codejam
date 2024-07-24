@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import injectContext from "./store/AppContext";
 import { ToastContainer } from 'react-toastify';
 import Navbar from "./components/Navbar";
+import MakeReservation from "./pages/MakeReservation";
 
 const App = () => {
 
@@ -17,6 +18,7 @@ const App = () => {
                     <Route path="/register" element={<Register />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="*" element={<NotFound />} />
+                    <Route path="/make" element={<MakeReservation />} />
                 </Routes>
                 <ToastContainer />
                 
