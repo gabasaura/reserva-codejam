@@ -12,15 +12,19 @@ def make_reservation():
 
     data = request.get_json()
     space_id = data['space_id']
-    start_time = datetime.datetime.strptime(data['start_time'], '%Y-%m-%d %H:%M:%S')
-    end_time = datetime.datetime.strptime(data['end_time'], '%Y-%m-%d %H:%M:%S')
-
     
+    try:
+        start_time = datetime.datetime.strptime(data['start_time'], '%Y-%m-%dT%H:%M')
+        end_time = datetime.datetime.strptime(data['end_time'], '%Y-%m-%dT%H:%M')
+    except ValueError as e:
+        return jsonify({'message': 'Formato de fecha y hora no válido'}), 400
+
+    # Verificar si el espacio existe
     space = Space.query.get(space_id)
     if not space:
-        return jsonify({'msg': 'Espacio no encontrado'}), 404
-    
-        
+        return jsonify({'message': 'Espacio no encontrado'}), 404
+
+    # Verificar superposición de reservas
     overlapping_reservation = Reservation.query.filter(
         Reservation.space_id == space_id,
         Reservation.start_time < end_time,
@@ -30,15 +34,14 @@ def make_reservation():
     if overlapping_reservation:
         return jsonify({'message': 'El espacio ya está reservado en el intervalo solicitado'}), 400
 
-
     new_reservation = Reservation(user_id=current_user_id, space_id=space_id, start_time=start_time, end_time=end_time)
 
     try:
         db.session.add(new_reservation)
         db.session.commit()
-        return jsonify({'success': 'Reserva creada exitosamente'})
+        return jsonify({'message': 'Reserva creada exitosamente'})
     except ValueError as e:
-        return jsonify({'msg': str(e)}), 400
+        return jsonify({'message': str(e)}), 400
 
 @reservations_bp.route('/cancel/<int:reservation_id>', methods=['DELETE'])
 @jwt_required()
