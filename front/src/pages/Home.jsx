@@ -22,9 +22,9 @@ const Home = () => {
                 {store.access_token ? (
                 <div className="mt-5  p-0 border border-2 border-black text-center">
                     <div className="mt-1 mb-5">
-                        <h2 className="text-info">Estimadx. {store?.current_user?.email}</h2>
-                        <p>Ya estas logueadx con exitosamente.</p>
-                        <p>Se que acabas de llegar, pero. Adios.</p>
+                        <h2 className="text-info">Hola {store?.current_user?.email}</h2>
+                        <p>Te has logueado con exitosamente.</p>
+                        <p>Genera una reserva</p>
                         <Link className="nav-link " onClick={actions.logout}>Log Out</Link>
                     </div>
                 </div>
