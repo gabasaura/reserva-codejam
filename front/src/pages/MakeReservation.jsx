@@ -6,9 +6,7 @@ const MakeReservation = () => {
 
   const { store, actions } = useContext(Context);
 
-	useEffect(() => {
-		actions.getReservations()
-}, [])
+
 
   return (
     <div>

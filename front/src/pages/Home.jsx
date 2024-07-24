@@ -10,7 +10,6 @@ const Home = () => {
 
     return (
         <>
-        <Navbar/>
         <div className="d-flex flex-column min-vh-100 align-items-center">
             <div className="flex-grow-1 w-75 mx-auto py-5 ">
                 <h1 className="text-center">Calendario Reservas</h1>
