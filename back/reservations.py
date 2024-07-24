@@ -15,10 +15,21 @@ def make_reservation():
     start_time = datetime.datetime.strptime(data['start_time'], '%Y-%m-%d %H:%M:%S')
     end_time = datetime.datetime.strptime(data['end_time'], '%Y-%m-%d %H:%M:%S')
 
-    # Verificar si el espacio existe
+    
     space = Space.query.get(space_id)
     if not space:
         return jsonify({'msg': 'Espacio no encontrado'}), 404
+    
+        # Verificar solapamientos de reservas
+    overlapping_reservation = Reservation.query.filter(
+        Reservation.space_id == space_id,
+        Reservation.start_time < end_time,
+        Reservation.end_time > start_time
+    ).first()
+
+    if overlapping_reservation:
+        return jsonify({'message': 'El espacio ya está reservado en el intervalo solicitado'}), 400
+
 
     new_reservation = Reservation(user_id=current_user_id, space_id=space_id, start_time=start_time, end_time=end_time)
 
