@@ -4,7 +4,7 @@ from flask import Flask
 from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
-from models import db, User, Table, Schedule, Reservation
+from models import db, User, Space, Reservation
 from auth import auth_bp
 
 load_dotenv()
