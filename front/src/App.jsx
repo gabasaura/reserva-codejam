@@ -5,11 +5,13 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import injectContext from "./store/AppContext";
 import { ToastContainer } from 'react-toastify';
+import Navbar from "./components/Navbar";
 
 const App = () => {
 
     return (
             <BrowserRouter>
+            <Navbar/>
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/register" element={<Register />} />
@@ -17,6 +19,7 @@ const App = () => {
                     <Route path="*" element={<NotFound />} />
                 </Routes>
                 <ToastContainer />
+                
             </BrowserRouter>
     )
 }
