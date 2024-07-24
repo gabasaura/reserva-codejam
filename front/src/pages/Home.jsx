@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { Context } from '../store/AppContext';
-
 import { Link } from "react-router-dom"
 
 const Home = () => {
@@ -9,15 +8,14 @@ const Home = () => {
 
 
     return (
-        <div className="d-flex flex-column min-vh-100">
-            <div className="flex-column flex-grow-1 w-75 mx-auto py-5 align-items-center">
-                <h1 className="text-center">Hello</h1>
+        <div className="d-flex flex-column min-vh-100 align-items-center">
+            <div className="flex-grow-1 w-75 mx-auto py-5 ">
+                <h1 className="text-center">Calendario Reservas</h1>
                 <h3 className="mb-3 text-center">Por favor, regístrate.</h3>
-                <h3 className="mb-3 text-center">┐(￣∀￣)┌</h3>
                 <div className="mt-5  p-0 border border-2 border-black justify-content-center">
                     <div className="text-center">
                         <Link to="/register">
-                            <button className="btn btn-primary px-5 m-3">Regístrate</button>
+                            <button className="btn btn-primary px-5 m-3">Registro</button>
                         </Link>
                     </div>
                 </div>
@@ -34,7 +32,7 @@ const Home = () => {
                     <div className="mt-5  p-0 border border-2 border-black justify-content-center">
                     <div className="text-center">
                         <Link to="/login">
-                            <button className="btn btn-primary px-5 m-3">Identifícate</button>
+                            <button className="btn btn-primary px-5 m-3">Ingresar</button>
                         </Link>
                     </div>
                 </div>

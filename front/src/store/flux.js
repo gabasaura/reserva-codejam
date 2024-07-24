@@ -4,7 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 	return {
 		store: {
-			url: 'http://127.0.0.1:5000',
+			url: 'http://localhost:3000',
 			email: '',
 			password: "",
 			repeatPassword: "",
@@ -66,7 +66,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					// Form submit logic here
 					console.log("Form submitted successfully!");
 
-					const url = 'http://127.0.0.1:5000/login';
+					const url = `${url}/login`;
 					const options = {
 						method: "POST",
 						headers: {
@@ -142,6 +142,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 			},
+			// SIGNUP
 			register: async (credenciales) => {
 				try {
 					const { url } = getStore()

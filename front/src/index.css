@@ -1,68 +1,97 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --bs-border-radius: 0;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+* {
+  font-family: "Work Sans", sans-serif;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  height: 100vh !important;
+
+
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+h6 {
+  font-size: .9rem;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+
+
+.navbar {
+  --bs-navbar-toggler-icon-bg: url(./assets/toggler-icon.svg);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+.navbar-brand {
+  margin-left: 0.6rem;
+
+}
+
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler-icon {
+  width: 45px;
+  height: 45px;
+  background-size: 45px 45px;
+}
+
+.nav-link.active {
+  font-weight: 600;
+}
+
+.p-top {
+  padding-top: .4em;
+}
+
+.offcanvas {
+  --bs-offcanvas-width: auto;
+}
+
+.offcanvas-header .btn-close {
+  margin-left: 4em;
+}
+
+.btn-close {
+  --bs-btn-close-opacity: 1;
+}
+
+.logo {
+  height: 45px;
+}
+
+input.form-control {
+  --bs-border-width: 1px;
+  --bs-border-color: black;
+}
+
+.img-logo {
+  width: 45px;
+  height: 45px;
+}
+
+.star-padding {
+  margin: 0 2px;
+  /* Adjust the padding as needed */
+}
+
+.img-avatar {
+  width: 220px;
+  height: 220px;
+  margin: 0 auto;
+
+}
+
+.icono-pipocard {
+  width: 50px;
+  padding: 5px 10px;
+  font-size: 16px;
+  height: 50px;
+}
+
+@media (max-width: 991.98px) {
+  .w-75 {
+      width: 90% !important;
   }
 }
