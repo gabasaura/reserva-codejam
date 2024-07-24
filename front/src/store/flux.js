@@ -11,6 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			current_user: null,
 			access_token: null,
 			error: '',
+			reservations: []
 		},
 		actions: {
 			handleChange: (e) => {
@@ -178,6 +179,27 @@ const getState = ({ getStore, getActions, setStore }) => {
                     toast.success("Log out Successful");
                 }
             },
+			getReservation: async () => {
+				try {
+					const { access_token } = getStore()
+					const url = '127.0.0.1:3000/reservations_queries/user_reservations';
+					const options = {
+						method: "GET",
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': 'Bearer ' + access_token
+						},
+					}
+
+					const response = await fetch(url, options)
+					const datos = await response.json()
+					setStore({ reservations: datos })
+				} catch (error) {
+					console.log(error.message)
+				}
+
+			}
+
         }
     };
 };
