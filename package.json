@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "react-router-dom": "^6.25.1",
-    "react-toastify": "^10.0.5"
-  }
-}
