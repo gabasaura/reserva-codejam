@@ -29,201 +29,157 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 
-			validateForm: () => {
-				const { email, password, repeatPassword } = getStore();
-				if (!email.trim() || !getActions().isValidEmail(email)) {
-					setStore({ error: "Please enter a valid email address." });
-					toast.error("Please enter a valid email address.")
-					return true; // Form is invalid
-				}
+            validateForm: () => {
+                const { email, password, repeatPassword } = getStore();
+                if (!email.trim() || !getActions().isValidEmail(email)) {
+                    setStore({ error: "Please enter a valid email address." });
+                    toast.error("Please enter a valid email address.")
+                    return true; // Form is invalid
+                }
 
-				if (!password.trim() || password.length < 6) {
-					setStore({ error: "Password must be at least 6 characters." });
-					toast.error("Password must be at least 6 characters.")
-					return true; // Form is invalid
-				}
-				if (password !== repeatPassword) {
-					setStore({ error: "Password doesn't match" });
-					toast.error("Password doesn't match")
-					return true; // Form is invalid
-				}
-				return false; // Form is valid
-			},
-			isValidEmail: (email) => {
-				// Basic email validation regex pattern
-				const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-				return emailPattern.test(email);
-			},
-			handleLogin: (e) => {
-				e.preventDefault();
-				const { email, password } = getStore();
-				const { actions } = getActions();
-				console.log({
-					email: email,
-					password: password,
-				})
-				if (!actions.validateForm()) {
-					// Form submit logic here
-					console.log("Form submitted successfully!");
+                if (!password.trim() || password.length < 6) {
+                    setStore({ error: "Password must be at least 6 characters." });
+                    toast.error("Password must be at least 6 characters.")
+                    return true; // Form is invalid
+                }
+                if (password !== repeatPassword) {
+                    setStore({ error: "Password doesn't match" });
+                    toast.error("Password doesn't match")
+                    return true; // Form is invalid
+                }
+                return false; // Form is valid
+            },
+            isValidEmail: (email) => {
+                // Basic email validation regex pattern
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailPattern.test(email);
+            },
+            handleLogin: async (e) => {
+                e.preventDefault();
+                const { email, password, url } = getStore(); 
+                const { actions } = getActions();
+                console.log({ email, password });
 
-					const url = `${url}/auth/login`;
-					const options = {
-						method: "POST",
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						body: JSON.stringify({
-							email: email,
-							password: password
+                if (!actions.validateForm()) {
+                    console.log("Form submitted successfully!");
 
-						})
-					};
+                    const loginUrl = `${url}/login`; // Corregido para agregar `/login`
+                    const options = {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email, password })
+                    };
 
-					fetch(url, options)
-						.then(response => response.json())
-						.then(data => {
-							console.log('Usuario logueado Con Éxito', data);
-						})
-						.catch(error => console.error('Log in Error:', error));
+                    try {
+                        const response = await fetch(loginUrl, options);
+                        const data = await response.json();
+                        console.log('Usuario logueado Con Éxito', data);
+                        actions.cancelForm(); // Clear form fields
+                    } catch (error) {
+                        console.error('Log in Error:', error);
+                    }
+                }
+            },
+            handleRegister: async (e) => {
+                e.preventDefault();
+                const { name, email, password, repeatPassword } = getStore();
+                const { register, validateForm } = getActions();
+                if (!validateForm()) register({ email, password, name, repeatPassword });
+            },
+            checkCurrentUser: () => {
+                if (sessionStorage.getItem('access_token')) {
+                    setStore({
+                        access_token: sessionStorage.getItem('access_token'),
+                        current_user: JSON.parse(sessionStorage.getItem('current_user'))
+                    });
+                }
+            },
+            login: async (credentials) => {
+                try {
+                    const { url } = getStore();
+                    const options = {
+                        method: 'POST',
+                        body: JSON.stringify(credentials),
+                        headers: {
+                            'Content-type': 'application/json'
+                        }
+                    };
 
-					actions.cancelForm(); // Clear form fields
-				}
-			},
-			handleRegister: (e) => {
-				e.preventDefault();
-				const { name, email, password, repeatPassword } = getStore()
-				const { register, validateForm } = getActions();
-				if (!validateForm()) register({ email, password, name, repeatPassword });
-			},
-			checkCurrentUser: () => {
-				if (sessionStorage.getItem('access_token')) {
-					setStore({
-						access_token: sessionStorage.getItem('access_token'),
-						current_user: JSON.parse(sessionStorage.getItem('current_user'))
-					});
-				}
-			},
-			login: async (credentials) => {
-				try {
-					const { url } = getStore();
-					const options = {
-						method: 'POST',
-						body: JSON.stringify(credentials),
-						headers: {
-							'Content-type': 'application/json'
-						}
-					};
+                    const response = await fetch(`${url}/login`, options); // Corregido para agregar `/login`
+                    const data = await response.json();
 
-					const response = await fetch(`${url}/auth/login`, options);
-					const data = await response.json();
+                    if (data.msg) {
+                        toast.error(data.msg);
+                    } else {
+                        const { access_token, user } = data;
+                        setStore({
+                            access_token,
+                            current_user: user,
+                            email: '',
+                            password: '',
+                        });
+                        sessionStorage.setItem('access_token', access_token);
+                        sessionStorage.setItem('current_user', JSON.stringify(user));
+                        toast.success("Log In Successful");
+                    }
 
-					if (data.msg) {
-						console.log(data);
-						if (data.msg) toast.error(data.msg)
-						else toast.success(data.success)
+                } catch (error) {
+                    console.log(error.message);
+                }
+            },
+            register: async (credenciales) => {
+                try {
+                    const { url } = getStore();
+                    const options = {
+                        method: 'POST',
+                        body: JSON.stringify(credenciales),
+                        headers: {
+                            'Content-type': 'application/json'
+                        }
+                    };
 
-					} else {
-						console.log(data);
+                    const response = await fetch(`${url}/signup`, options); // No cambia, `/signup` es correcto
+                    const datos = await response.json();
+                    const { cancelForm } = getActions();
+                    if (datos.msg) {
+                        toast.error(datos.msg);
+                    } else {
+                        toast.success(datos.success);
+                        const { access_token, user } = datos.datos;
+                        setStore({
+                            access_token,
+                            current_user: user,
+                            email: '',
+                            password: '',
+                            name: ''
+                        });
+                        sessionStorage.setItem('access_token', access_token);
+                        sessionStorage.setItem('current_user', JSON.stringify(user));
+                        cancelForm();
+                    }
 
-						const { access_token, user } = data;
-						setStore({
-							access_token: access_token,
-							current_user: user,
-							email: '',
-							password: '',
-						});
-						sessionStorage.setItem('access_token', access_token);
-						sessionStorage.setItem('current_user', JSON.stringify(user));
-						toast.success("Log In Sucessful")
-					}
+                } catch (error) {
+                    console.log(error.message);
+                }
+            },
 
-				} catch (error) {
-					console.log(error.message);
-				}
-
-			},
-			register: async (credenciales) => {
-				try {
-					const { url } = getStore()
-					const option = {
-						method: 'POST',
-						body: JSON.stringify(credenciales),
-						headers: {
-							'Content-type': 'application/json'
-						}
-					}
-
-					const response = await fetch(`${url}/signup`, option)
-					const datos = await response.json()
-					const { cancelForm } = getActions()
-					if (datos.msg) {
-						console.log(datos)
-						if (datos.msg) toast.error(datos.msg)
-						else toast.success(datos.success)
-					} else {
-						console.log(datos)
-
-						toast.success(datos.success)
-						const { access_token, user } = datos.datos;
-						setStore({
-							access_token: access_token,
-							current_user: user,
-							email: '',
-							password: '',
-							name: ''
-						});
-						sessionStorage.setItem('access_token', access_token);
-						sessionStorage.setItem('current_user', JSON.stringify(user));
-						cancelForm()
-					}
-
-				} catch (error) {
-					console.log(error.message)
-				}
-
-			},
-
-
-			logout: () => {
-				if (sessionStorage.getItem('access_token')) {
-					setStore({
-						access_token: null,
-						current_user: null,
-						email: '',
-						password: ''
-					})
-					sessionStorage.removeItem('access_token')
-					sessionStorage.removeItem('current_user')
-					toast.success("Log out Successful")
-
-				}
-			},
-			handleFormChange: (e) => {
-				const { name, value } = e.target
-				setStore({
-					[name]: value
-				})
-			},
-
-			cancelForm: () => {
-				console.log("cancelForm called"); // Debug message
-				console.log("setStore is:", setStore); // Check if setStore is defined and a function
-				if (typeof setStore === "function") {
-					setStore({
-						username: "",
-						email: "",
-						password: "",
-						repeatPassword: "",
-						name: "",
-						error: ""
-					});
-				} else {
-					console.error("setStore is not a function");
-				}
-
-			}
-		}
-	}
+            logout: () => {
+                if (sessionStorage.getItem('access_token')) {
+                    setStore({
+                        access_token: null,
+                        current_user: null,
+                        email: '',
+                        password: ''
+                    });
+                    sessionStorage.removeItem('access_token');
+                    sessionStorage.removeItem('current_user');
+                    toast.success("Log out Successful");
+                }
+            },
+        }
+    };
 };
 
 export default getState;
