@@ -43,11 +43,41 @@ const MakeReservation = () => {
   };
 
   return (
-    <div>
-      <h2>Reservar una Sala</h2>
-     
+    <div className="d-flex flex-column min-vh-100 align-items-center">
+            <div className="flex-grow-1 w-75 mx-auto py-5 ">
+      <h1>Reservar una Sala</h1>
+
+      <div>
+      <table className="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Video Juegos</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Mesas Ludoteca</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Sillones de Descando</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Cabinas Telefónicas</td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
+      <div className="mt-5 card p-0 border border-2 border-black p-5">
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className='p-1'>
           <label>
             ID del Espacio:
             <input
@@ -58,7 +88,7 @@ const MakeReservation = () => {
             />
           </label>
         </div>
-        <div>
+        <div className='p-1'> 
           <label>
             Hora de Inicio (YYYY-MM-DD HH:MM:SS):
             <input
@@ -69,7 +99,7 @@ const MakeReservation = () => {
             />
           </label>
         </div>
-        <div>
+        <div className='p-1'>
           <label>
             Hora de Fin (YYYY-MM-DD HH:MM:SS):
             <input
@@ -81,11 +111,14 @@ const MakeReservation = () => {
           </label>
         </div>
         <div>
-          <button type="submit">Reservar</button>
+          <button className="btn btn-outline-info" type="submit">Reservar</button>
         </div>
       </form>
+      </div>
       {message && <p>{message}</p>}
     </div>
+    </div>
+
   )
 }
 
