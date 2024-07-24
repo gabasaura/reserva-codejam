@@ -4,7 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 	return {
 		store: {
-			url: 'http://127.0.0.1:3000/auth',
+			url: 'http://127.0.0.1:3000',
 			email: '',
 			password: "",
 			repeatPassword: "",
