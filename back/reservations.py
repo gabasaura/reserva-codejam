@@ -20,7 +20,7 @@ def make_reservation():
     if not space:
         return jsonify({'msg': 'Espacio no encontrado'}), 404
     
-        # Verificar solapamientos de reservas
+        
     overlapping_reservation = Reservation.query.filter(
         Reservation.space_id == space_id,
         Reservation.start_time < end_time,

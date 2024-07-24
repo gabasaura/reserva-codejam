@@ -7,6 +7,7 @@ from flask_jwt_extended import JWTManager
 from models import db, User, Space, Reservation
 from auth import auth_bp
 from reservations import reservations_bp
+from reservations_info import reservations_queries_bp
 
 load_dotenv()
 
@@ -22,6 +23,7 @@ CORS(app)
 
 app.register_blueprint(auth_bp, url_prefix='/auth')
 app.register_blueprint(reservations_bp, url_prefix='/reservations')
+app.register_blueprint(reservations_queries_bp, url_prefix='/reservations_queries')
 
 @app.route('/', methods=['GET'])
 def main():

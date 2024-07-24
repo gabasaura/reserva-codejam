@@ -41,12 +41,22 @@ class Reservation(db.Model):
             raise ValueError("No se pueden hacer reservas en el pasado")
         if start_time > datetime.now() + timedelta(days=30):
             raise ValueError("No se pueden hacer reservas con más de un mes de antelación")
-        if start_time.hour < 13 or end_time.hour > 20:
-            raise ValueError("Las reservas solo pueden ser entre la 1pm y las 8pm")
-        if start_time.weekday() >= 5:  # 5 y 6 son sábado y domingo
+        if start_time.hour < 14 or end_time.hour > 20:
+            raise ValueError("Las reservas solo pueden ser entre la 2pm y las 8pm")
+        if start_time.weekday() >= 5:  
             raise ValueError("Las reservas solo están permitidas de lunes a viernes")
 
         self.user_id = user_id
         self.space_id = space_id
         self.start_time = start_time
         self.end_time = end_time
+        
+    def serialize(self):
+        
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'space_id': self.space_id,
+            'start_time': self.start_time.strftime('%Y-%m-%d %H:%M:%S'),
+            'end_time': self.end_time.strftime('%Y-%m-%d %H:%M:%S')
+        }
