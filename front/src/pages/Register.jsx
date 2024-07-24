@@ -27,6 +27,10 @@ const Register = () => {
                                     <label htmlFor="email" className="form-label">Email</label>
                                     <input type="email" className="form-control" id="email" name="email" value={store.email} onChange={actions.handleFormChange} />
                                 </div>
+                                <div className="col-12 col-sm-6">
+                                    <label htmlFor="email" className="form-label">Nombre Completo</label>
+                                    <input type="text" className="form-control" id="name" name="name" value={store.name} onChange={actions.handleFormChange} />
+                                </div>
                             </div>
                             
                             <div className="row m-2">
